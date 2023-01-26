@@ -24,7 +24,8 @@ public class Car {
 
     public Car(String model, int series) {
         this.model = model;
-        this.series = series;
+        this.series = series > 0 ? series :
+                (int) (Math.random() * 10000);
     }
 
     public void setId(Long id) {
@@ -44,10 +45,7 @@ public class Car {
     }
 
     public int getSeries() {
-        if (series <= 0) {
-            return (int) (Math.random() * 10000);
-        } else
-            return (int) (this.series * 10 + getUser().getId());
+        return series;
     }
 
     public void setSeries(int series) {

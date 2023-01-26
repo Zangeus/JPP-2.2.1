@@ -18,7 +18,7 @@ public class MainApp {
 
         userService.add(
                 new User("Bonjin", "Unknown", "user!@mail.net"),
-                new Car("UWU_the_one", 0));
+                new Car("UWU_the_one", 1));
         userService.add(
                 new User("Bonjin", "Unknown", "user!@mail.net"),
                 new Car("URU_the_two", 0));
@@ -39,6 +39,10 @@ public class MainApp {
             System.out.println("Машина: " + user.getCar().getModel() +
                     ", серии - " + user.getCar().getSeries());
             System.out.println("-----------------------------------------------");
+        }
+
+        for (User u: userService.getUsersByModelAndSeries("UWU_the_one", 1)) {
+            System.out.println(u);
         }
 
         context.close();

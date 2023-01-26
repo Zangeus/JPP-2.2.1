@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "users")
 public class User {
-
+    private final String defaultValue = "";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,9 +27,13 @@ public class User {
     }
 
     public User(String firstName, String lastName, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
+        this.firstName = firstName.equals("") ? defaultValue : firstName;
+        this.lastName = lastName.equals("") ? defaultValue : lastName;
+
+        if (email.contains("!")) {
+            this.email = email.replaceAll(
+                    "!", String.valueOf((int)(Math.random() * 100)));
+        } else this.email = email.equals("") ? defaultValue : email;
     }
 
     public Car getCar() {
@@ -65,10 +69,7 @@ public class User {
     }
 
     public String getEmail() {
-        if (email.contains("!")) {
-            String[] strings = email.split("!");
-            return strings[0] + getId() + strings[1];
-        } else return email;
+        return email;
     }
 
     public void setEmail(String email) {
@@ -77,7 +78,11 @@ public class User {
 
     @Override
     public String toString() {
+        if ((firstName + lastName + email).equals(defaultValue))
+            return "Пользователь отсутствует";
+
         return "Пользователь: " + firstName + ", " + lastName +
-                ", email - " + email + ", " + car;
+                ", email - " + email + ", "
+                + (car == null ? "машина отсутствует" : car);
     }
 }
