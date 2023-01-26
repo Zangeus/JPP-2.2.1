@@ -1,6 +1,7 @@
 package hiber;
 
 import hiber.config.AppConfig;
+import hiber.model.Car;
 import hiber.model.User;
 import hiber.service.UserService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -15,18 +16,29 @@ public class MainApp {
 
         UserService userService = context.getBean(UserService.class);
 
-        userService.add(new User("User1", "Lastname1", "user1@mail.ru"));
-        userService.add(new User("User2", "Lastname2", "user2@mail.ru"));
-        userService.add(new User("User3", "Lastname3", "user3@mail.ru"));
-        userService.add(new User("User4", "Lastname4", "user4@mail.ru"));
+        userService.add(
+                new User("Bonjin", "Unknown", "user!@mail.net"),
+                new Car("UWU_the_one", 0));
+        userService.add(
+                new User("Bonjin", "Unknown", "user!@mail.net"),
+                new Car("URU_the_two", 0));
+        userService.add(
+                new User("Bonjin", "Unknown", "user!@mail.net"),
+                new Car("UNU_the_three", 0));
+        userService.add(
+                new User("Bonjin", "Unknown", "user!@mail.net"),
+                new Car("UBU_the_four", 0));
+
 
         List<User> users = userService.listUsers();
         for (User user : users) {
-            System.out.println("Id = " + user.getId());
-            System.out.println("First Name = " + user.getFirstName());
-            System.out.println("Last Name = " + user.getLastName());
-            System.out.println("Email = " + user.getEmail());
-            System.out.println();
+            System.out.println("Пользователь под номером " + user.getId());
+            System.out.println("Имя: " + user.getFirstName());
+            System.out.println("Фамилия: " + user.getLastName());
+            System.out.println("Email: " + user.getEmail());
+            System.out.println("Машина: " + user.getCar().getModel() +
+                    ", серии - " + user.getCar().getSeries());
+            System.out.println("-----------------------------------------------");
         }
 
         context.close();
