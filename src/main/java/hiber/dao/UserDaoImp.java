@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -29,15 +28,20 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
-    public List<User> getUserByModelAndSeries(String model, int series) {
-        List<Car> cars = sessionFactory.openSession().createQuery(
-                "from Car where model = '" + model + "' and series = " + series).getResultList();
+    @SuppressWarnings("unchecked")
+    public List<User> getUsersByCar(String model, int series) {
 
-        List<User> list = new ArrayList<>();
-        for (Car car : cars) {
-            list.add(car.getUser());
+        TypedQuery<Car> cars = sessionFactory.openSession().createQuery(
+                "from Car where model =: model and series =: series ");
+        cars.setParameter("model", model);
+        cars.setParameter("series", series);
+
+        List<User> users = new ArrayList<>();
+        for (Car car: cars.getResultList()) {
+            users.add(car.getUser());
         }
-        return list;
+
+        return users;
     }
 
     @Override

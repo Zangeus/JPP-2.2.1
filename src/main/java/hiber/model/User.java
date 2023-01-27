@@ -24,6 +24,9 @@ public class User {
     private Car car;
 
     public User() {
+        firstName = defaultValue;
+        lastName = defaultValue;
+        email = defaultValue;
     }
 
     public User(String firstName, String lastName, String email) {
