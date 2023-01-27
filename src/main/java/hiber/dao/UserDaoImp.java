@@ -33,15 +33,11 @@ public class UserDaoImp implements UserDao {
         List<Car> cars = sessionFactory.openSession().createQuery(
                 "from Car where model = '" + model + "' and series = " + series).getResultList();
 
-        if (cars.isEmpty())
-            return Arrays.asList(new User("", "", ""));
-        else {
-            List<User> list = new ArrayList<>();
-            for (Car car: cars) {
-                list.add(car.getUser());
-            }
-            return list;
+        List<User> list = new ArrayList<>();
+        for (Car car : cars) {
+            list.add(car.getUser());
         }
+        return list;
     }
 
     @Override
