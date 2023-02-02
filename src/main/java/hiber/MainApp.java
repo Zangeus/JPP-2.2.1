@@ -41,7 +41,7 @@ public class MainApp {
             System.out.println("-----------------------------------------------");
         }
 
-        for (User u: userService.getUsersByCar("UWU_t2he_one", 1)) {
+        for (User u: userService.getUsersByCar("UWU_the_one", 1)) {
             System.out.println(u);
         }
 

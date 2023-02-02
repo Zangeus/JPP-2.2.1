@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -28,21 +27,17 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public List<User> getUsersByCar(String model, int series) {
 
-        TypedQuery<Car> cars = sessionFactory.openSession().createQuery(
-                "from Car where model =: model and series =: series ");
-        cars.setParameter("model", model);
-        cars.setParameter("series", series);
+        TypedQuery<User> users = sessionFactory.openSession().createQuery(
+                "from User u where u.car.model =: model and u.car.series =: series", User.class);
+        users.setParameter("model", model);
+        users.setParameter("series", series);
 
-        List<User> users = new ArrayList<>();
-        for (Car car: cars.getResultList()) {
-            users.add(car.getUser());
-        }
-
-        return users;
+        return users.getResultList();
     }
+
+
 
     @Override
     @SuppressWarnings("unchecked")
@@ -50,5 +45,4 @@ public class UserDaoImp implements UserDao {
         TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("from User");
         return query.getResultList();
     }
-
 }
